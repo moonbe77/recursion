@@ -2,16 +2,42 @@ const root = document.querySelector("#root");
 const content = document.querySelector("#content");
 const button = document.getElementById("add");
 
-var list = [0, 3, 10, "asd"];
+var list = [
+	{
+		name: "wave 1",
+		value: 100,
+	},
+	{
+		name: "wave 2",
+		value: 200,
+	},
+	{
+		name: "wave 6",
+		value: 300,
+	},
+	{
+		name: "wave 7",
+		value: 564300,
+	},
+	{
+		name: "wave 5",
+		value: 30054,
+	},
+];
 
-function renderList(list) {
-	const listHTML = list
-		.map((item, index) => {
-			return `<li>${item}</li>`;
-		})
-		.join("");
+list.sort((a, b) => {
+	return a.name < b.name ? -1 : 1;
+});
 
-	content.innerHTML = listHTML;
+function renderList(values) {
+	console.log("RENDER LIST", values);
+	let render = values;
+	render.map((item, index) => {
+		console.log(item.name);
+		`<li>${item.name}</li>`;
+	});
+
+	content.innerHTML = render.join("");
 }
 renderList(list);
 
@@ -22,13 +48,19 @@ function insertMissing(index, value) {
 
 function getListMissing(val, prevIndex) {
 	let index = list.indexOf(val);
+	// find the value on the list
+	const find = list.find((item, index) => {
+		return item.name === `wave ${val}`;
+	});
+	console.log("VAL", val);
+	console.log(find);
 
 	if (val > list.length) {
 		console.log("Value is greater than list length");
-		return;
+		return { prevIndex, val: val + 1 };
 	}
 
-	if (index !== -1) {
+	if (find !== undefined) {
 		return getListMissing(val + 1, index);
 	}
 	return { prevIndex, val };
@@ -37,7 +69,10 @@ function getListMissing(val, prevIndex) {
 function addMissing() {
 	const missingValue = getListMissing(0);
 
-	insertMissing(missingValue.prevIndex + 1, missingValue.val);
+	insertMissing(missingValue.prevIndex + 1, {
+		name: `wave ${missingValue.val}`,
+		value: 0,
+	});
 }
 
 button.addEventListener("click", addMissing);
