@@ -1,7 +1,23 @@
-var list = [0, 3, 4, "a", 10, "asd"];
+const root = document.querySelector("#root");
+const content = document.querySelector("#content");
+const button = document.getElementById("add");
+
+var list = [0, 3, 10, "asd"];
+
+function renderList(list) {
+	const listHTML = list
+		.map((item, index) => {
+			return `<li>${item}</li>`;
+		})
+		.join("");
+
+	content.innerHTML = listHTML;
+}
+renderList(list);
 
 function insertMissing(index, value) {
 	list.splice(index, 0, value);
+	renderList(list);
 }
 
 function getListMissing(val, prevIndex) {
@@ -12,7 +28,10 @@ function getListMissing(val, prevIndex) {
 		return;
 	}
 
-	return index !== -1 ? getListMissing(val + 1, index) : { prevIndex, val };
+	if (index !== -1) {
+		return getListMissing(val + 1, index);
+	}
+	return { prevIndex, val };
 }
 
 function addMissing() {
@@ -21,20 +40,4 @@ function addMissing() {
 	insertMissing(missingValue.prevIndex + 1, missingValue.val);
 }
 
-console.log("****----****");
-console.log(list);
-addMissing();
-console.log(list);
-addMissing();
-addMissing();
-addMissing();
-addMissing();
-addMissing();
-addMissing();
-addMissing();
-addMissing();
-addMissing();
-addMissing();
-addMissing();
-console.log(list);
-console.log("****----****");
+button.addEventListener("click", addMissing);
