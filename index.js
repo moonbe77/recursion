@@ -12,7 +12,7 @@ var list = [
 		value: 200,
 	},
 	{
-		name: "wave 6",
+		name: "bungalo",
 		value: 300,
 	},
 	{
@@ -20,7 +20,7 @@ var list = [
 		value: 564300,
 	},
 	{
-		name: "wave 5",
+		name: "mutilo",
 		value: 30054,
 	},
 ];
@@ -31,18 +31,21 @@ list.sort((a, b) => {
 
 function renderList(values) {
 	console.log("RENDER LIST", values);
-	let render = values;
-	render.map((item, index) => {
-		console.log(item.name);
-		`<li>${item.name}</li>`;
-	});
+	let render = values
+		.map((item, index) => {
+			return `<li>${item.name}</li>`;
+		})
+		.join("");
 
-	content.innerHTML = render.join("");
+	content.innerHTML = render;
 }
 renderList(list);
 
 function insertMissing(index, value) {
 	list.splice(index, 0, value);
+	list.sort((a, b) => {
+		return a.name < b.name ? -1 : 1;
+	});
 	renderList(list);
 }
 
@@ -52,8 +55,6 @@ function getListMissing(val, prevIndex) {
 	const find = list.find((item, index) => {
 		return item.name === `wave ${val}`;
 	});
-	console.log("VAL", val);
-	console.log(find);
 
 	if (val > list.length) {
 		console.log("Value is greater than list length");
@@ -67,7 +68,7 @@ function getListMissing(val, prevIndex) {
 }
 
 function addMissing() {
-	const missingValue = getListMissing(0);
+	const missingValue = getListMissing(1);
 
 	insertMissing(missingValue.prevIndex + 1, {
 		name: `wave ${missingValue.val}`,
