@@ -1,6 +1,7 @@
 const root = document.querySelector("#root");
 const content = document.querySelector("#content");
 const button = document.getElementById("add");
+let delItem;
 
 var list = [
 	{
@@ -33,7 +34,7 @@ function renderList(values) {
 	console.log("RENDER LIST", values);
 	let render = values
 		.map((item, index) => {
-			return `<li>${item.name}</li>`;
+			return `<div class='deleteItem'>${item.name}</div>`;
 		})
 		.join("");
 
@@ -75,5 +76,10 @@ function addMissing() {
 		value: 0,
 	});
 }
-
+function deleteItem(ev) {
+	console.log(ev);
+}
 button.addEventListener("click", addMissing);
+
+// change name on click over item
+// delete items from list
