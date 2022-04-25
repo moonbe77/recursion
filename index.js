@@ -1,7 +1,6 @@
 const root = document.querySelector("#root");
 const content = document.querySelector("#content");
 const button = document.getElementById("add");
-let delItem;
 
 var list = [
 	{
@@ -31,14 +30,18 @@ list.sort((a, b) => {
 });
 
 function renderList(values) {
-	console.log("RENDER LIST", values);
 	let render = values
 		.map((item, index) => {
-			return `<div class='deleteItem'>${item.name}</div>`;
+			return `<div class='item'>
+			${item.name}<span class='delete' id="${index}">x</span>
+			</div>`;
 		})
 		.join("");
 
 	content.innerHTML = render;
+	document.querySelectorAll(".delete").forEach((element) => {
+		element.addEventListener("click", deleteItem);
+	});
 }
 renderList(list);
 
@@ -76,10 +79,15 @@ function addMissing() {
 		value: 0,
 	});
 }
+
 function deleteItem(ev) {
-	console.log(ev);
+	console.log(ev.target.id);
+	const index = ev.target.id;
+	list.splice(index, 1);
+	renderList(list);
 }
+
 button.addEventListener("click", addMissing);
 
+// delete items from list DONE
 // change name on click over item
-// delete items from list
