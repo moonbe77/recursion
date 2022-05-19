@@ -6,12 +6,37 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
 		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				font-family: Arial, Helvetica, sans-serif;
+			}
 			.item {
 				border: 1px solid #ccc;
 				padding: 0.5rem;
 				cursor: pointer;
 				display: flex;
 				justify-content: space-between;
+			}
+			#add {
+				border: 1px solid #ccc;
+				padding: 0.8rem;
+				margin-bottom: 1rem;
+				cursor: pointer;
+				display: flex;
+				justify-content: space-between;
+			}
+			.delete {
+				color: red;
+				cursor: pointer;
+				padding: 5px;
+				width: 20px;
+				height: 20px;
+				background-color: beige;
+				text-align: center;
+			}
+			.delete:hover {
+				background-color: rgb(152, 152, 23);
 			}
 		</style>
 	</head>
